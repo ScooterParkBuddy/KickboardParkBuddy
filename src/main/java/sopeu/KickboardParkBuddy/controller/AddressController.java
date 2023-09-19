@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import sopeu.KickboardParkBuddy.dto.ParkingResponse;
-import sopeu.KickboardParkBuddy.service.ParkingService;
+import sopeu.KickboardParkBuddy.service.parking.ParkingService;
 
 import java.util.List;
 

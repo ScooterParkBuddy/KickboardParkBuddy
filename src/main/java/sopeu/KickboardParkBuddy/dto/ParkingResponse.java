@@ -1,21 +1,20 @@
 package sopeu.KickboardParkBuddy.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import lombok.extern.slf4j.Slf4j;
+import org.locationtech.jts.geom.Point;
 import sopeu.KickboardParkBuddy.domain.Parking;
 
-import javax.persistence.GeneratedValue;
-
 @Data
+@Slf4j
 @Builder
 public class ParkingResponse {
     private Long id;
     private String placeName;
     private String address;
-    private Double lat;
-    private Double lng;
+    private String longitude;
+    private String latitude;
 
     //엔티티에 매핑
     public static ParkingResponse from(Parking parking) {
@@ -23,8 +22,8 @@ public class ParkingResponse {
                 .id(parking.getId())
                 .placeName(parking.getPlaceName())
                 .address(parking.getAddress())
-                .lat(parking.getLat())
-                .lng(parking.getLng())
+                .longitude(String.valueOf(parking.getLocation().getX()))
+                .latitude(String.valueOf(parking.getLocation().getY()))
                 .build();
     }
 

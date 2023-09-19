@@ -1,4 +1,4 @@
-package sopeu.KickboardParkBuddy.service;
+package sopeu.KickboardParkBuddy.service.search;
 
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
@@ -12,17 +12,19 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 import sopeu.KickboardParkBuddy.domain.Coordinates;
+import sopeu.KickboardParkBuddy.dto.search.KeywordSearchRequest;
+import sopeu.KickboardParkBuddy.dto.search.KeywordSearchResponse;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 
 @Component
 @Slf4j
-public class ParkingApiService {
-    private final String uri = "https://dapi.kakao.com/v2/local/search/address.json";
+public class SearchApiService {
+    private final String uri = "https://dapi.kakao.com/v2/local/search/keyword.json";
     private final String kakaoLocalKey = URLDecoder.decode("f45f27c7b49797090f7f8c6cc60d0a2e", StandardCharsets.UTF_8);
 
-    public Coordinates getCoordinate(String address) {
+    public KeywordSearchResponse getKeywordSearch(KeywordSearchRequest request) {
         RestTemplate restTemplate = new RestTemplate();  //api 요청을 보내기 위해 spring에서 제공하는 restTemplate를 사용
 
         String apiKey = "KakaoAK " + kakaoLocalKey;
@@ -34,7 +36,7 @@ public class ParkingApiService {
 
         UriComponents uriComponents = UriComponentsBuilder
                 .fromHttpUrl(uri)
-                .queryParam("query", address)
+                .queryParam("query", request.getKeyword())
                 .build();
 
         ResponseEntity<String> response = restTemplate.exchange(uriComponents.toString(), HttpMethod.GET, entity, String.class);
@@ -44,9 +46,12 @@ public class ParkingApiService {
         JSONObject json = new JSONObject(body);
         // body에서 좌표 뽑아내기
         JSONArray documents = json.getJSONArray("documents");
+        String placeName = documents.getJSONObject(0).getString("place_name");
+        String address = documents.getJSONObject(0).getString("road_address_name");
         String x = documents.getJSONObject(0).getString("x");
         String y = documents.getJSONObject(0).getString("y");
 
-        return new Coordinates(x, y);
+
+        return new KeywordSearchResponse(placeName, address, x, y);
     }
 }
