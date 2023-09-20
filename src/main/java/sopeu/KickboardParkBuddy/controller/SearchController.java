@@ -18,7 +18,7 @@ public class SearchController {
     private final SearchService searchService;
 
     @GetMapping("/search")
-    public List<ParkingResultDto> searching(@RequestBody SearchRequest searchRequest) throws Exception {
+    public List<ParkingResultDto> searching(@RequestBody SearchRequest searchRequest) throws Exception {  //내 위치로 검색
         return searchService.searchParking(searchRequest);
     }
 

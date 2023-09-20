@@ -10,11 +10,10 @@ import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.io.WKTReader;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sopeu.KickboardParkBuddy.domain.Coordinates;
+import sopeu.KickboardParkBuddy.dto.Coordinates;
 import sopeu.KickboardParkBuddy.domain.Parking;
 import sopeu.KickboardParkBuddy.dto.ParkingResponse;
 import sopeu.KickboardParkBuddy.repository.ParkingRepository;
-import sopeu.KickboardParkBuddy.service.parking.ParkingApiService;
 
 import javax.annotation.PostConstruct;
 import java.io.FileReader;

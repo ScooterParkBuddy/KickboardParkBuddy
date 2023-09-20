@@ -2,11 +2,16 @@ package sopeu.KickboardParkBuddy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.security.SecureRandom;
 import java.util.Base64;
 
 @SpringBootApplication
+@EnableJpaAuditing
 public class KickboardParkBuddyApplication {
 
 	public static void main(String[] args) {
@@ -23,6 +28,9 @@ public class KickboardParkBuddyApplication {
 //		System.out.println("Generated Secret Key: " + secretKey);
 		SpringApplication.run(KickboardParkBuddyApplication.class, args);
 	}
-
+//	@Bean
+//	PasswordEncoder passwordEncoder() {
+//		return new BCryptPasswordEncoder();
+//	}
 
 }

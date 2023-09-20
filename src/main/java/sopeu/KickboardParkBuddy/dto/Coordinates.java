@@ -1,4 +1,4 @@
-package sopeu.KickboardParkBuddy.domain;
+package sopeu.KickboardParkBuddy.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

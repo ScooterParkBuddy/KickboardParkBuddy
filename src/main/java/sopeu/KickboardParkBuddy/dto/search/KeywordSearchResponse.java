@@ -9,6 +9,7 @@ import sopeu.KickboardParkBuddy.dto.ParkingResponse;
 public class KeywordSearchResponse {
     private String placeName;
     private String address;
-    private String lat;
     private String lng;
+    private String lat;
+
 }

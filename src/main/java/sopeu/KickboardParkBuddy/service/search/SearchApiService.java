@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
-import sopeu.KickboardParkBuddy.domain.Coordinates;
 import sopeu.KickboardParkBuddy.dto.search.KeywordSearchRequest;
 import sopeu.KickboardParkBuddy.dto.search.KeywordSearchResponse;
 
