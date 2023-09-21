@@ -11,10 +11,6 @@ java {
     sourceCompatibility = '11'
 }
 
-bootJar {
-    mainClassName = 'sopeu.KickboardParkBuddy.KickboardParkBuddyApplication'
-}
-
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
@@ -27,16 +23,20 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    //implementation 'org.springframework.boot:spring-boot-starter-security'
+    // implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client' // MariaDB
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    //testImplementation 'org.springframework.security:spring-security-test'
+    // testImplementation 'org.springframework.security:spring-security-test'
     implementation group: 'org.hibernate', name: 'hibernate-spatial', version: '5.6.15.Final'
     implementation 'org.json:json:20230227'
     implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+}
+
+springBoot {
+    mainClassName = 'sopeu.KickboardParkBuddy.KickboardParkBuddyApplication'
 }
 
 tasks.named('test') {
