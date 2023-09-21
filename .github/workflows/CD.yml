@@ -62,9 +62,9 @@ jobs:
       - name: Deploy
         run: |
           aws deploy create-deployment \
-          --application-name kickboardparkbuddy \
+          --application-name KickboardParkBuddy-Deploy \
           --deployment-config-name CodeDeployDefault.AllAtOnce \
-          --deployment-group-name kickboardparkbuddy-prod \
+          --deployment-group-name KickboardParkBuddy-Prod \
           --file-exists-behavior OVERWRITE \
-          --s3-location bucket=kickboardparkbuddy-bucket,bundleType=zip,key=kickboardparkbuddy/$GITHUB_SHA.zip \
+          --s3-location bucket=kickboardparkbuddy-bucket,bundleType=zip,key=sopeu2/$GITHUB_SHA.zip \
           --region ap-northeast-2 \
