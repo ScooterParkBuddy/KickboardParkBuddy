@@ -8,6 +8,8 @@ import org.json.simple.parser.JSONParser;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.io.WKTReader;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sopeu.KickboardParkBuddy.dto.Coordinates;
@@ -16,8 +18,7 @@ import sopeu.KickboardParkBuddy.dto.ParkingResponse;
 import sopeu.KickboardParkBuddy.repository.ParkingRepository;
 
 import javax.annotation.PostConstruct;
-import java.io.FileReader;
-import java.io.Reader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,23 +35,32 @@ public class ParkingService {
     @Transactional
     public void saveParkingInfo() throws Exception {
         JSONParser parser = new JSONParser();
-        Reader reader = new FileReader("/Users/shinhyejin/Downloads/KickboardParkBuddy/src/main/resources/gangnam.json");
-        JSONArray dateArray = (JSONArray) parser.parse(reader);
 
-        for (Object obj : dateArray) {
-            JSONObject element = (JSONObject) obj;
-            String placeName = (String) element.get("name");
-            String address = (String) element.get("address");
+        // 클래스패스 상의 리소스를 가져옵니다.
+        Resource resource = new ClassPathResource("gangnam.json");
 
-            Coordinates coordinate = parkingApiService.getCoordinate(address);
-            Double lng = Double.parseDouble(coordinate.getX());
-            Double lat = Double.parseDouble(coordinate.getY());
+        // 리소스로부터 InputStream을 얻어옵니다.
+        InputStream inputStream = resource.getInputStream();
 
-            Point point = getPoint(lng, lat);
-            Parking parkingInfo = new Parking(placeName, address, point, lng, lat);
-            parkingRepository.save(parkingInfo);
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            JSONArray dateArray = (JSONArray) parser.parse(reader);
+
+            for (Object obj : dateArray) {
+                JSONObject element = (JSONObject) obj;
+                String placeName = (String) element.get("name");
+                String address = (String) element.get("address");
+
+                Coordinates coordinate = parkingApiService.getCoordinate(address);
+                Double lng = Double.parseDouble(coordinate.getX());
+                Double lat = Double.parseDouble(coordinate.getY());
+
+                Point point = getPoint(lng, lat);
+                Parking parkingInfo = new Parking(placeName, address, point, lng, lat);
+                parkingRepository.save(parkingInfo);
+            }
         }
     }
+
 
     public List<ParkingResponse> getAllParkings() {
         List<Parking> findParkings = parkingRepository.findAll();

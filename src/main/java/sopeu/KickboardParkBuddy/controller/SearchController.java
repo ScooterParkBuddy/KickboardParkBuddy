@@ -3,6 +3,7 @@ package sopeu.KickboardParkBuddy.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import sopeu.KickboardParkBuddy.dto.ParkingResultDto;
 import sopeu.KickboardParkBuddy.dto.search.KeywordSearchRequest;
@@ -18,12 +19,14 @@ public class SearchController {
     private final SearchService searchService;
 
     @GetMapping("/search")
-    public List<ParkingResultDto> searching(@RequestBody SearchRequest searchRequest) throws Exception {  //내 위치로 검색
+    public List<ParkingResultDto> searching(@RequestParam(name = "x")String x, @RequestParam(name = "y")String y) throws Exception {  //내 위치로 검색
+        SearchRequest searchRequest = new SearchRequest(x, y);
         return searchService.searchParking(searchRequest);
     }
 
     @GetMapping("/search/keyword")
-    public KeywordSearchResponse keywordSearch(@RequestBody KeywordSearchRequest keywordSearchRequest) {
+    public KeywordSearchResponse keywordSearch(@RequestParam(name = "keyword")String keyword) {
+        KeywordSearchRequest keywordSearchRequest = new KeywordSearchRequest(keyword);
         return searchService.keywordSearch(keywordSearchRequest);
     }
 }
