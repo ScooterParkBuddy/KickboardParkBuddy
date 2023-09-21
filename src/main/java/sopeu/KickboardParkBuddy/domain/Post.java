@@ -26,18 +26,23 @@ public class Post extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User writer;
 
+    private Long boardId;
+
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Comment> comment = new ArrayList<>();
-    public Post(String title, String contents, User user) {
+
+    public Post(String title, String contents, User user, Long boardId) {
         this.title = title;
         this.contents = contents;
         this.writer = user;
+        this.boardId = boardId;
     }
 
-    public Post(String title, String contents, Optional<User> findUser) {
+    public Post(String title, String contents, Optional<User> findUser, Long boardId) {
         this.title = title;
         this.contents = contents;
         this.writer = findUser.orElse(null);
+        this.boardId = boardId;
     }
 
     public void updateTitle(String title) {

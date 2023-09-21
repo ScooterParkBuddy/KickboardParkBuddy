@@ -16,6 +16,7 @@ public class PostCommentResponse {
     private String title;
     private String contents;
     private Long writerId;
+    private Long boardId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private List<CommentResponse> comments;
@@ -31,6 +32,7 @@ public class PostCommentResponse {
                 .title(post.getTitle())
                 .contents(post.getContents())
                 .writerId(post.getWriter().getId())
+                .boardId(post.getBoardId())
                 .createdAt(post.getCreatedAt())
                 .updatedAt(post.getUpdateAt())
                 .comments(commentResponses)
