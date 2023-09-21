@@ -12,8 +12,10 @@ public class PostResponse {
     private String title;
     private String contents;
     private Long writerId;
+    private Long boardId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
 
     //엔티티에 매핑
     public static PostResponse from(Post post) {
@@ -22,6 +24,7 @@ public class PostResponse {
                 .title(post.getTitle())
                 .contents(post.getContents())
                 .writerId(post.getWriter().getId())
+                .boardId(post.getBoardId())
                 .createdAt(post.getCreatedAt())
                 .updatedAt(post.getUpdateAt())
                 .build();

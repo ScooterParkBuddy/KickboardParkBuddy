@@ -11,4 +11,5 @@ public class PostRequest {
     private String title;
     private String contents;
     private Long writerId;
+    private Long boardId;
 }

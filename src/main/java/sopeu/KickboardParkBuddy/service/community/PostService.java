@@ -27,12 +27,12 @@ public class PostService {
     @Transactional
     public void save(PostRequest request) {
         Optional<User> findUser = userRepository.findById(request.getWriterId());
-        Post post = new Post(request.getTitle(), request.getContents(), findUser);
+        Post post = new Post(request.getTitle(), request.getContents(), findUser, request.getBoardId());
         postRepository.save(post);
     }
 
-    public List<PostResponse> getAllPosts() {
-        List<Post> findPosts = postRepository.findAll();
+    public List<PostResponse> getAllPosts(Long boardId) {
+        List<Post> findPosts = postRepository.findByboardId(boardId);
         List<PostResponse> responses = new ArrayList<>();
         for (Post post : findPosts) {
             responses.add(PostResponse.from(post));

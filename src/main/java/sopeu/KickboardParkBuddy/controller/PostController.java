@@ -18,8 +18,8 @@ public class PostController {
 
     //전체 게시글 조회
     @GetMapping
-    public List<PostResponse> getPosts() {
-        return postService.getAllPosts();
+    public List<PostResponse> getPosts(@RequestParam(name = "boardId")Long boardId) {
+        return postService.getAllPosts(boardId);
     }
 
     //게시글 하나 조회(댓글 포함)
