@@ -35,8 +35,8 @@ dependencies {
     implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
 }
 
-springBoot {
-    mainClassName = 'sopeu.KickboardParkBuddy.KickboardParkBuddyApplication'
+jar {
+    enabled = false
 }
 
 tasks.named('test') {
