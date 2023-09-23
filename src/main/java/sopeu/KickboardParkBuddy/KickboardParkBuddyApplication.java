@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import java.security.SecureRandom;
 import java.util.Base64;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 @EnableJpaAuditing
 public class KickboardParkBuddyApplication {
 
