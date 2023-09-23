@@ -1,5 +1,6 @@
 package sopeu.KickboardParkBuddy.controller;
 
+import org.springframework.web.bind.annotation.*;
 import sopeu.KickboardParkBuddy.dto.UserInfoDto;
 import sopeu.KickboardParkBuddy.dto.UsertDto;
 import sopeu.KickboardParkBuddy.service.KakaoService;
@@ -8,11 +9,6 @@ import sopeu.KickboardParkBuddy.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 
 import javax.servlet.ServletException;
@@ -88,5 +84,11 @@ public class KakaoLoginController {
         String token = userService.resolveToken(request);
         return userService.getUserEmail(token);
     }
+
+    @DeleteMapping("/delete")
+    public void deleteUser(@RequestParam(name="email") String email){
+        userService.deleteUser(email);
+    }
+
 
 }

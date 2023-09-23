@@ -46,9 +46,10 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
         String authrizationHeader = request.getHeader(AUTHORIZATION);
 
         // 로그인, 리프레시 요청이라면 토큰 검사하지 않음
-        if (servletPath.equals("/") || servletPath.equals("/kakao/login") ||
+        if (servletPath.equals("/") || servletPath.equals("/kakao/login") || servletPath.equals("/predict") ||
                 servletPath.equals("/kakao/refresh") || servletPath.equals("/parking") || (servletPath.equals("/search") && request.getParameter("x") != null && request.getParameter("y") != null)||
-                (servletPath.equals("/search/keyword") && request.getParameter("keyword") != null)
+                (servletPath.equals("/search/keyword") && request.getParameter("keyword") != null)||
+                (servletPath.equals("/delete") && request.getParameter("email") != null)
         ) {
             filterChain.doFilter(request, response);
         } else if (authrizationHeader == null || !authrizationHeader.startsWith(TOKEN_HEADER_PREFIX)) {

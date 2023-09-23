@@ -26,7 +26,6 @@ import org.springframework.stereotype.Component;
 @Configuration
 @EnableWebSecurity
 @Component
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthenticationProvider authenticationProvider;
@@ -34,11 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final AuthenticationSuccessHandler authenticationSuccessHandler;
     private final CustomAuthorizationFilter customAuthorizationFilter;
     private final AccessDeniedHandler accessDeniedHandler;
-    public   CustomAuthenticationFilter customAuthenticationFilter;
+    public CustomAuthenticationFilter customAuthenticationFilter;
     private final KakaoService kakaoService;
-
-
-
 
 
     @Override
@@ -47,14 +43,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean());
-
-
-//        customAuthenticationFilter.setFilterProcessesUrl("/api/login");
         customAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler);
         customAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
         System.out.println("customAuthenticationFilter 확인1 = " + customAuthenticationFilter);
@@ -67,7 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 세션 사용 X
         http.authorizeRequests()
-                .antMatchers("/", "/kakao/login", "/kakao/refresh").permitAll()
+                .antMatchers("/", "/kakao/login", "/kakao/refresh", "/predict", "/delete").permitAll()
                 .antMatchers("/parking", "/search", "/search/keyword").permitAll() // Permit access to "/parking" endpoint
                 .anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);
