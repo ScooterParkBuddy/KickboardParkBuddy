@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.security.SecureRandom;
 import java.util.Base64;
+
 @SpringBootApplication
 @EnableJpaAuditing
 public class KickboardParkBuddyApplication {
