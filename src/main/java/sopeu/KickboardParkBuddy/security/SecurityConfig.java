@@ -34,11 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final AuthenticationSuccessHandler authenticationSuccessHandler;
     private final CustomAuthorizationFilter customAuthorizationFilter;
     private final AccessDeniedHandler accessDeniedHandler;
-    public   CustomAuthenticationFilter customAuthenticationFilter;
+    public CustomAuthenticationFilter customAuthenticationFilter;
     private final KakaoService kakaoService;
-
-
-
 
 
     @Override
@@ -47,14 +44,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean());
-
-
-//        customAuthenticationFilter.setFilterProcessesUrl("/api/login");
         customAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler);
         customAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
         System.out.println("customAuthenticationFilter 확인1 = " + customAuthenticationFilter);
