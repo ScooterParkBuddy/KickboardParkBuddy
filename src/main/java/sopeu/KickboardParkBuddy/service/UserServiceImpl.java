@@ -173,4 +173,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         accessTokenResponseMap.put(AT_HEADER, accessToken);
         return accessTokenResponseMap;
     }
+    @Override
+    public void deleteUser(String email){
+        Optional<User> byUsername = userRepository.findByUsername(email);
+        userRepository.deleteById(byUsername.get().getId());
+    }
+
 }

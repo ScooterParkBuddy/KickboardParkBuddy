@@ -19,4 +19,6 @@ public interface UserService {
 
     String resolveToken(HttpServletRequest request);   // Request의 Header에서 token 값을 가져옵니다.
     UserInfoDto getUserEmail(String token);  //토큰에서 회원 아이디(= 이메일) 추출
+
+    void deleteUser(String email);
 }
