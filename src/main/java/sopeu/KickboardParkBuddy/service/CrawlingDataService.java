@@ -47,6 +47,11 @@ public class CrawlingDataService {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
         options.addArguments("--disable-popup-blocking");
+        options.addArguments("--single-process");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--headless");
+
 
         // 브라우저 선택
         driver = new ChromeDriver(options);
