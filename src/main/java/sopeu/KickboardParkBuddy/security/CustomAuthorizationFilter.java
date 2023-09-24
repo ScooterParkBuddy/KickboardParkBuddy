@@ -49,7 +49,8 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
         if (servletPath.equals("/") || (servletPath.equals("/kakao/login") && request.getParameter("code") != null) || servletPath.equals("/estimate") ||
                 servletPath.equals("/kakao/refresh") || servletPath.equals("/parking") || (servletPath.equals("/search") && request.getParameter("x") != null && request.getParameter("y") != null)||
                 (servletPath.equals("/search/keyword") && request.getParameter("keyword") != null)||
-                (servletPath.equals("/delete") && request.getParameter("email") != null)
+                (servletPath.equals("/delete") && request.getParameter("email") != null)||
+                servletPath.equals("/accident")
         ) {
             filterChain.doFilter(request, response);
         } else if (authrizationHeader == null || !authrizationHeader.startsWith(TOKEN_HEADER_PREFIX)) {
