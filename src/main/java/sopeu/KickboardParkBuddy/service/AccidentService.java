@@ -30,7 +30,6 @@ public class AccidentService {
     private final AccidentRepository accidentRepository;
     private static final int WGS84_STANDARD_SRID = 4_326;
 
-//    @PostConstruct
     @Transactional
     public void saveAccidentsInfo() throws Exception {
         JSONParser parser = new JSONParser();

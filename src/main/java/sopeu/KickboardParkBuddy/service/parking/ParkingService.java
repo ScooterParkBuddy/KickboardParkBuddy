@@ -29,9 +29,10 @@ import java.util.List;
 public class ParkingService {
     private final ParkingApiService parkingApiService;
     private final ParkingRepository parkingRepository;
+
     private static final int WGS84_STANDARD_SRID = 4_326;
 
-    @PostConstruct
+
     @Transactional
     public void saveParkingInfo() throws Exception {
         JSONParser parser = new JSONParser();

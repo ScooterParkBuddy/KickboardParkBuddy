@@ -19,9 +19,4 @@ public class AccidentController {
         return accidentService.getAllAccidents();
     }
 
-    @GetMapping("/accident/init")
-    public void accidentInit() throws Exception {
-        accidentService.saveAccidentsInfo();
-    }
-
 }
