@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final PasswordEncoder passwordEncoder;
 
     //토큰에서 회원 정보 추출
-    public UserInfoDto getUserEmail(String accesstoken) {
+    public UserInfoDto getUserInfo(String accesstoken) {
 
         String[] token = accesstoken.split(" ");
 
@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .getBody()
                 .getSubject();
         Optional<User> byUsername = userRepository.findByUsername(email);
-        UserInfoDto userInfo = new UserInfoDto(byUsername.get().getId(), email);
+        UserInfoDto userInfo = new UserInfoDto(byUsername.get().getId(), email, byUsername.get().getNickname(), byUsername.get().getRefreshToken());
         return userInfo;
     }
 

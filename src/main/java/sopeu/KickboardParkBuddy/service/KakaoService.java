@@ -24,8 +24,6 @@ import java.util.HashMap;
 @Setter
 @RequiredArgsConstructor
 public class KakaoService  {
-
-
     // SecurityConfig 의 Configure 에서 주입 받는다
     private CustomAuthenticationFilter customAuthenticationFilter;   //인증처리
     private  AuthenticationFailureHandler authenticationFailureHandler;  //인증 실패처리
@@ -34,13 +32,9 @@ public class KakaoService  {
 
     // 로그인 처리 후 JWT토큰 발급
     public void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
         String username = request.getAttribute("username").toString();
 //        System.out.println("KakaoService username = " + username);
 //        System.out.println("customAuthenticationFilter 확인2 = " + customAuthenticationFilter);
-
-
 
         try {
             //CustomAuthenticationFilter 의 attemptAuthentication 으로 이동
@@ -84,7 +78,7 @@ public class KakaoService  {
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
             sb.append("&client_id=f45f27c7b49797090f7f8c6cc60d0a2e");  //본인이 발급받은 key
-            sb.append("&redirect_uri=http://52.78.133.32:8080/kakao/login");     // 본인이 설정해 놓은 경로
+            sb.append("&redirect_uri=http://localhost:3000/kakaologin");     // 본인이 설정해 놓은 경로
             sb.append("&code=" + authorize_code);
             bw.write(sb.toString());
             bw.flush();
@@ -92,8 +86,6 @@ public class KakaoService  {
             //    결과 코드가 200이라면 성공
             int responseCode = conn.getResponseCode();
             System.out.println("responseCode : " + responseCode);
-
-
 
             //    요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
