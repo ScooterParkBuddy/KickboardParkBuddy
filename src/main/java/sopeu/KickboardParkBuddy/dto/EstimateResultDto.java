@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor
 @Slf4j
 @Builder
-public class estimateResultDto {
+public class EstimateResultDto {
     private String distance;
     private String time;
     private String location;

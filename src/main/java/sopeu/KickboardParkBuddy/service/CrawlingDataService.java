@@ -12,7 +12,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.stereotype.Service;
-import sopeu.KickboardParkBuddy.dto.estimateResultDto;
+import sopeu.KickboardParkBuddy.dto.EstimateResultDto;
 import sopeu.KickboardParkBuddy.dto.search.KeywordSearchRequest;
 import sopeu.KickboardParkBuddy.dto.search.KeywordSearchResponse;
 import sopeu.KickboardParkBuddy.service.search.SearchService;
@@ -29,7 +29,7 @@ public class CrawlingDataService {
     private static final String url = "https://map.kakao.com/link/to/";
 
     //private static final String url = "https://map.naver.com/v5/search";
-    public estimateResultDto process(String start, String destination) throws InterruptedException {
+    public EstimateResultDto process(String start, String destination) throws InterruptedException {
 
         KeywordSearchRequest keywordSearchRequest = new KeywordSearchRequest(destination);
         KeywordSearchResponse keywordSearchResponse = searchService.keywordSearch(keywordSearchRequest);
@@ -56,7 +56,7 @@ public class CrawlingDataService {
         // 브라우저 선택
         driver = new ChromeDriver(options);
 
-        estimateResultDto data = getDataList(realUrl, start);
+        EstimateResultDto data = getDataList(realUrl, start);
 
         // 탭 닫기
         driver.close();
@@ -66,7 +66,7 @@ public class CrawlingDataService {
     }
 
     // 데이터 가져오기
-    private estimateResultDto getDataList(String url, String start) throws InterruptedException {
+    private EstimateResultDto getDataList(String url, String start) throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(1000));
 
         // (1) 브라우저에서 url로 이동한다.
@@ -108,7 +108,7 @@ public class CrawlingDataService {
         WebElement element3 = driver.findElement(By.xpath("//*[@id=\"info.bikeRoute\"]/div[1]/ul/li[1]/div[1]/div[1]/div/span[1]"));
         String altitude = element3.getText();
 
-        return new estimateResultDto(dis, time, altitude);
+        return new EstimateResultDto(dis, time, altitude);
     }
 }
 
