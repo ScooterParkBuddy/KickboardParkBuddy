@@ -12,4 +12,6 @@ import lombok.Setter;
 public class UserInfoDto {
     private Long userId;
     private String email;
+    private String name;
+    private String refreshToken;
 }

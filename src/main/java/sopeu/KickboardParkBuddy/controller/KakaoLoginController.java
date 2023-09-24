@@ -35,8 +35,8 @@ public class KakaoLoginController {
     public void oauthLogin(@RequestParam("code") String code, HttpServletResponse response, HttpServletRequest request) throws URISyntaxException, ServletException, IOException {
         //카카오 서버로 부터 사용자 정보 받아오기
         String accessToken = kakaoService.getAccessToken(code);
-        log.info("accessToken = " + accessToken);
-        log.info("code = " + code);
+//        log.info("accessToken = " + accessToken);
+//        log.info("code = " + code);
         HashMap<String, Object> userInfo = kakaoService.getUserInfo(accessToken);
 
         //사용자 정보 전달객체 생성
@@ -82,7 +82,7 @@ public class KakaoLoginController {
     @GetMapping("/kakao/my")
     public UserInfoDto getUserInfo(HttpServletRequest request) {
         String token = userService.resolveToken(request);
-        return userService.getUserEmail(token);
+        return userService.getUserInfo(token);
     }
 
     @DeleteMapping("/delete")
