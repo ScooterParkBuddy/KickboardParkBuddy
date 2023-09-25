@@ -33,8 +33,6 @@ public class KakaoService  {
     // 로그인 처리 후 JWT토큰 발급
     public void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getAttribute("username").toString();
-//        System.out.println("KakaoService username = " + username);
-//        System.out.println("customAuthenticationFilter 확인2 = " + customAuthenticationFilter);
 
         try {
             //CustomAuthenticationFilter 의 attemptAuthentication 으로 이동
