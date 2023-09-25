@@ -5,12 +5,14 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import sopeu.KickboardParkBuddy.service.UserService;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -35,15 +37,15 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         User user = (User) authentication.getPrincipal();
-        //토큰 생성
+
+        // 토큰 생성
         String accessToken = JWT.create()
-                .withSubject(user.getUsername())  // sub = 유저네임( = 아이디(email) )
-                .withExpiresAt(new Date(System.currentTimeMillis() + AT_EXP_TIME))  // 토큰 만료시간
-                .withClaim("nickName", request.getAttribute("nickname").toString())   //사용자 이름
-//                .withClaim("password",request.getAttribute("password").toString())
-//                .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
-                .withIssuedAt(new Date(System.currentTimeMillis()))  // 토큰 생성시간
-                .sign(Algorithm.HMAC256(JWT_SECRET));  //JWT_SECRET 키로 암호화
+                .withSubject(user.getUsername())
+                .withExpiresAt(new Date(System.currentTimeMillis() + AT_EXP_TIME))
+                .withClaim("nickName", request.getAttribute("nickname").toString())
+                .withIssuedAt(new Date(System.currentTimeMillis()))
+                .sign(Algorithm.HMAC256(JWT_SECRET));
+
         String refreshToken = JWT.create()
                 .withSubject(user.getUsername())
                 .withClaim("nickName", request.getAttribute("nickname").toString())
@@ -54,19 +56,36 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
         // Refresh Token DB에 저장
         userService.updateRefreshToken(user.getUsername(), refreshToken);
 
-        // Access Token , Refresh Token 프론트에 Response Header로 전달
+        // HTTP-only 쿠키 설정
+//        ResponseCookie refreshTokenCookie = new Cookie("refreshToken", refreshToken);
+//        refreshTokenCookie.setMaxAge(7 * 24 * 60 * 60); // 7일
+//        refreshTokenCookie.setPath("/");
+//        refreshTokenCookie.setHttpOnly(true);
+//        refreshTokenCookie.setSecure(true); // HTTPS에서만 전송되도록 설정
+        //refreshTokenCookie.setSameSite("None"); // Cross-Site 요청에서도 전송되도록 설정
+
+        ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
+                .path("/")
+                .sameSite("None")
+                .httpOnly(false)
+                .secure(false)
+                .maxAge(7 * 24 * 60 * 60)
+                .build();
+
+        // 쿠키를 응답에 추가
+        response.addHeader("Set-Cookie", cookie.toString());
+
+        // Access Token을 Response Header로 전달
         response.setContentType(APPLICATION_JSON_VALUE);
         response.setCharacterEncoding("utf-8");
         response.setHeader(AT_HEADER, accessToken);
-        response.setHeader(RT_HEADER, refreshToken);
 
-
-        //토큰정보 담아서
+        // 토큰 정보를 담아서 응답으로 보내기
         Map<String, String> responseMap = new HashMap<>();
         responseMap.put(AT_HEADER, accessToken);
-        responseMap.put(RT_HEADER, refreshToken);
 
-        //화면에 보여주기
+        // ObjectMapper를 사용하여 JSON 형태로 응답 전송
         new ObjectMapper().writeValue(response.getWriter(), responseMap);
     }
+
 }
