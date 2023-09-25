@@ -67,7 +67,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
         ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
                 .path("/")
                 .sameSite("None")
-                .httpOnly(false)
+                .httpOnly(true)
                 .secure(false)
                 .maxAge(7 * 24 * 60 * 60)
                 .build();
