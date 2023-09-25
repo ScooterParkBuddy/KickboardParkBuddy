@@ -17,7 +17,6 @@ import sopeu.KickboardParkBuddy.domain.Parking;
 import sopeu.KickboardParkBuddy.dto.ParkingResponse;
 import sopeu.KickboardParkBuddy.repository.ParkingRepository;
 
-import javax.annotation.PostConstruct;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +37,7 @@ public class ParkingService {
         JSONParser parser = new JSONParser();
 
         // 클래스패스 상의 리소스를 가져옵니다.
-        Resource resource = new ClassPathResource("gangnam.json");
+        Resource resource = new ClassPathResource("parkingData.json");
 
         // 리소스로부터 InputStream을 얻어옵니다.
         InputStream inputStream = resource.getInputStream();
