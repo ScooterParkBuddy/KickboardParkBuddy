@@ -57,18 +57,18 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
         userService.updateRefreshToken(user.getUsername(), refreshToken);
 
         // HTTP-only 쿠키 설정
-//        ResponseCookie refreshTokenCookie = new Cookie("refreshToken", refreshToken);
+//        Cookie refreshTokenCookie = new Cookie("refreshToken", refreshToken);
 //        refreshTokenCookie.setMaxAge(7 * 24 * 60 * 60); // 7일
 //        refreshTokenCookie.setPath("/");
 //        refreshTokenCookie.setHttpOnly(true);
 //        refreshTokenCookie.setSecure(true); // HTTPS에서만 전송되도록 설정
-        //refreshTokenCookie.setSameSite("None"); // Cross-Site 요청에서도 전송되도록 설정
+//        refreshTokenCookie.setSameSite("None"); // Cross-Site 요청에서도 전송되도록 설정
 
         ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
                 .path("/")
                 .sameSite("None")
                 .httpOnly(true)
-                .secure(false)
+                .secure(true)
                 .maxAge(7 * 24 * 60 * 60)
                 .build();
 
