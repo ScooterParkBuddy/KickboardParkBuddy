@@ -1,5 +1,6 @@
 package sopeu.KickboardParkBuddy.service;
 
+import sopeu.KickboardParkBuddy.dto.AliasRequestDto;
 import sopeu.KickboardParkBuddy.dto.UserInfoDto;
 import sopeu.KickboardParkBuddy.dto.UsertDto;
 
@@ -21,4 +22,6 @@ public interface UserService {
     UserInfoDto getUserInfo(String token);  //토큰에서 회원 아이디(= 이메일) 추출
 
     void deleteUser(String email);
+
+    void setAlias(AliasRequestDto requestDto);
 }

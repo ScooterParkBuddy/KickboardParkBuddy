@@ -1,6 +1,7 @@
 package sopeu.KickboardParkBuddy.controller;
 
 import org.springframework.web.bind.annotation.*;
+import sopeu.KickboardParkBuddy.dto.AliasRequestDto;
 import sopeu.KickboardParkBuddy.dto.UserInfoDto;
 import sopeu.KickboardParkBuddy.dto.UsertDto;
 import sopeu.KickboardParkBuddy.service.KakaoService;
@@ -89,6 +90,12 @@ public class KakaoLoginController {
     @DeleteMapping("/delete")
     public void deleteUser(@RequestParam(name="email") String email){
         userService.deleteUser(email);
+    }
+
+    @PostMapping("/nickname")
+    public void saveAlias(@RequestBody AliasRequestDto request) {
+        userService.setAlias(request);
+
     }
 
 

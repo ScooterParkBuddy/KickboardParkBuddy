@@ -21,6 +21,8 @@ public class User {
     private String password;
     private String nickname;  //이름
 
+    private String alias;
+
     @OneToMany(mappedBy = "writer", cascade = CascadeType.REMOVE)
     private List<Post> post = new ArrayList<>();
 
@@ -30,6 +32,10 @@ public class User {
 
     public void updateRefreshToken(String newToken) {
         this.refreshToken = newToken;
+    }
+
+    public void saveAlias(String alias) {
+        this.alias = alias;
     }
 
 
