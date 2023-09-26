@@ -1,6 +1,7 @@
 package sopeu.KickboardParkBuddy.controller;
 
 import org.springframework.web.bind.annotation.*;
+import sopeu.KickboardParkBuddy.dto.AliasRequestDto;
 import sopeu.KickboardParkBuddy.dto.UserInfoDto;
 import sopeu.KickboardParkBuddy.dto.UsertDto;
 import sopeu.KickboardParkBuddy.service.KakaoService;
@@ -62,18 +63,15 @@ public class KakaoLoginController {
     }
     //refreshToken 을 이용하여 accessToken 가져오기
     @GetMapping("/kakao/refresh")
-    public ResponseEntity<Map<String, String>> refresh(@RequestHeader(value="cookie") String refreshToken, HttpServletRequest request, HttpServletResponse response) {
-//        String authorizationHeader = request.getHeader(AUTHORIZATION);
+    public ResponseEntity<Map<String, String>> refresh(HttpServletRequest request, HttpServletResponse response) {
+        String authorizationHeader = request.getHeader(AUTHORIZATION);
 
-          if (refreshToken == null || refreshToken.isEmpty()) {
-              throw new RuntimeException("RefreshToken cookie does not exist.");
-          }
 
-//        if (authorizationHeader == null || !authorizationHeader.startsWith(TOKEN_HEADER_PREFIX)) {
-//            throw new RuntimeException("JWT Token이 존재하지 않습니다.");
-//        }
-//        String refreshToken = authorizationHeader.substring(TOKEN_HEADER_PREFIX.length());
-        Map<String, String> tokens = userService.refresh(refreshToken.substring(13));  //refreshToken 을 넣으면 accessToken 이 반환 됨
+        if (authorizationHeader == null || !authorizationHeader.startsWith(TOKEN_HEADER_PREFIX)) {
+            throw new RuntimeException("JWT Token이 존재하지 않습니다.");
+        }
+        String refreshToken = authorizationHeader.substring(TOKEN_HEADER_PREFIX.length());
+        Map<String, String> tokens = userService.refresh(refreshToken);  //refreshToken 을 넣으면 accessToken 이 반환 됨
         response.setHeader(AT_HEADER, tokens.get(AT_HEADER));   //위의 accessToken 을 헤더에 넣고
 
         if (tokens.get(RT_HEADER) != null) {              // refreshToken 의 만료기간이 다가와서 새로 받은 refreshToken 이 있다면
@@ -92,6 +90,12 @@ public class KakaoLoginController {
     @DeleteMapping("/delete")
     public void deleteUser(@RequestParam(name="email") String email){
         userService.deleteUser(email);
+    }
+
+    @PostMapping("/nickname")
+    public void saveAlias(@RequestBody AliasRequestDto request) {
+        userService.setAlias(request);
+
     }
 
 

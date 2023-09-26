@@ -7,6 +7,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import sopeu.KickboardParkBuddy.domain.User;
 //import com.hunseong.jwt.domain.Role;
+import sopeu.KickboardParkBuddy.dto.AliasRequestDto;
 import sopeu.KickboardParkBuddy.dto.UserInfoDto;
 import sopeu.KickboardParkBuddy.dto.UsertDto;
 //import com.hunseong.jwt.domain.dto.RoleToUserRequestDto;
@@ -178,5 +179,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         Optional<User> byUsername = userRepository.findByUsername(email);
         userRepository.deleteById(byUsername.get().getId());
     }
+
+    @Override
+    public void setAlias(AliasRequestDto aliasRequestDto) {
+        Optional<User> findUserOptional = userRepository.findById(aliasRequestDto.getUserId());
+
+        if (findUserOptional.isPresent()) {
+            User user = findUserOptional.get();
+            user.saveAlias(aliasRequestDto.getAlias());
+            userRepository.save(user); // Assuming you need to save the user after modifying it
+        } else {
+            // Handle the case where the user with the given ID is not found
+            // You can throw an exception, log an error, or perform any other desired action.
+        }
+    }
+
 
 }

@@ -3,6 +3,7 @@ package sopeu.KickboardParkBuddy.domain.global;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.EntityListeners;
@@ -16,6 +17,6 @@ public abstract class BaseEntity {
     @CreatedDate  //Entity가 최초 생성되어 저장될 때 시간이 자동으로 저장
     private LocalDateTime createdAt;
 
-    @LastModifiedBy  //조회한 Entity의 값을 변경할 때 시간이 자동으로 저장
+    @LastModifiedDate  //조회한 Entity의 값을 변경할 때 시간이 자동으로 저장
     private LocalDateTime updateAt;
 }
