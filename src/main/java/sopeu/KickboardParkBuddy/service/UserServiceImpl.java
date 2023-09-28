@@ -194,5 +194,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
     }
 
+    @Override
+    public String getAlias(Long userId){
+        Optional<User> findUser = userRepository.findById(userId);
+        return findUser.get().getAlias();
+    }
+
 
 }

@@ -24,4 +24,6 @@ public interface UserService {
     void deleteUser(String email);
 
     void setAlias(AliasRequestDto requestDto);
+
+    String getAlias(Long userId);
 }
