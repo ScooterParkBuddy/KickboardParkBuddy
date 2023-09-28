@@ -95,8 +95,11 @@ public class KakaoLoginController {
     @PostMapping("/nickname")
     public void saveAlias(@RequestBody AliasRequestDto request) {
         userService.setAlias(request);
-
     }
 
+    @GetMapping("/kakao/my/nickname")
+    public String getNickname(@RequestParam("userId") Long userId){
+        return userService.getAlias(userId);
+    }
 
 }
